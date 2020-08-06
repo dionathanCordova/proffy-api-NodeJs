@@ -16,7 +16,7 @@ export default class ClassesController{
         if(!week_day || !subject || !time) {
             return response.status(400).json({'error': 'missing filters to search classes'});
         }
-        
+
         const timeInMinutes = convertHourToMinutes(time as string);
 
         const classes = await db('classes')
@@ -39,7 +39,7 @@ export default class ClassesController{
         const { name, avatar, whatsapp, bio, subject, cost, schedule} = request.body;
     
         const trx = await db.transaction();
-
+        
         try {
             const insertedUsersId = await trx('users').insert({
                 name,
@@ -47,15 +47,15 @@ export default class ClassesController{
                 whatsapp,
                 bio
             });
-        
+            
             const user_id = insertedUsersId[0];
-        
+            
             const insertedIdClasses = await trx('classes').insert({
                 subject,
                 cost,
                 user_id
             });
-        
+
             const class_id = insertedIdClasses[0];
         
             const classSchedule = schedule.map((sched: SheduleItem) => {
@@ -66,12 +66,12 @@ export default class ClassesController{
                     to: convertHourToMinutes(sched.to)
                 }
             })
-        
+
             await trx('class_schedule').insert(classSchedule);
         
             await trx.commit();
         
-            return response.status(201).json(user_id);
+            return response.status(201).json('user_id');
         } catch (error) {
 
             await trx.rollback();
