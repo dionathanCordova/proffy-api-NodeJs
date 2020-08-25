@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import db from '../database/conecction';
+import db from '../database/sqlite/conecction';
 import convertHourToMinutes from '../utils/convertHourToMinutes';
 
 interface SheduleItem {
@@ -36,19 +36,23 @@ export default class ClassesController{
     }
 
     async create(request : Request, response: Response) {
-        const { name, avatar, whatsapp, bio, subject, cost, schedule} = request.body;
+        const { id, name, avatar, whatsapp, bio, subject, cost, schedule} = request.body;
     
         const trx = await db.transaction();
         
         try {
-            const insertedUsersId = await trx('users').insert({
-                name,
-                avatar,
-                whatsapp,
-                bio
-            });
-            
-            const user_id = insertedUsersId[0];
+            const insertedUsersId = await trx('users')
+                .where('id', '=', id)
+                .update({
+                    name,
+                    avatar,
+                    whatsapp,
+                    bio
+                });
+
+            const user_id = insertedUsersId;
+
+
             
             const insertedIdClasses = await trx('classes').insert({
                 subject,
@@ -71,9 +75,9 @@ export default class ClassesController{
         
             await trx.commit();
         
+         
             return response.status(201).json('user_id');
         } catch (error) {
-
             await trx.rollback();
             return response.status(400).json({error: 'unexpected error white creating the class, make a call to admistrator'})
         }

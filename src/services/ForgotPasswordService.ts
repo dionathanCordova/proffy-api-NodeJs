@@ -1,9 +1,10 @@
-import db from "../database/conecction";
+import db from "../database/sqlite/conecction";
 import { sign } from "jsonwebtoken";
 import path from 'path';
 
 import GmailProvider from '../providers/MailProvider/implementations/GmailProvider';
-import MailTemplateProvider from '../providers/MailTemplateProvider/implementations/HandleBarsTemplateProvider';
+import { getRepository } from "typeorm";
+import User from "../models/User";
 
 interface RequestData {
     email: string;
@@ -12,15 +13,17 @@ interface RequestData {
 export default class ForgotPassControllerService{
     
     public async execute({email}: RequestData) : Promise<any> {
-        const userData = await db('users')
-            .where('email', '=', email)
-            .first();
+        const userRepository = getRepository(User);
+
+        const userData = await userRepository.findOne({
+            where: { email }
+        });
 
         if(!userData) {
             throw new Error('User does not existis');
         }
 
-        const token = await sign({}, '8889d00d4773aa1c485a26901b89d833', {
+        const token = sign({}, '8889d00d4773aa1c485a26901b89d833', {
             subject: userData.email,
             expiresIn: '1h',
         });
@@ -28,14 +31,10 @@ export default class ForgotPassControllerService{
         const dataExpires = new Date();
         dataExpires.setHours(dataExpires.getHours() + 1);
 
-        const newPassword = Math.floor(Math.random() * 165536);
+        userData.password_reset_expires = dataExpires;
+        userData.password_reset_token = token
 
-        await db('users')
-        .where('email', '=', email)
-        .update({
-            passwordResetToken: token,
-            passwordResetExpires: dataExpires,
-        });
+        await userRepository.save(userData);
 
         const forgotPasswordTemplate = path.resolve(__dirname, '..', 'templates', 'forgot_password.hbs');
 

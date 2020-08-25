@@ -1,6 +1,6 @@
-import db from "../database/conecction"
 import { hash } from 'bcryptjs';
-import { uuid } from 'uuidv4';
+import { getRepository } from 'typeorm';
+import User from '../models/User';
 
 interface ICreateData {
     name: string;
@@ -12,6 +12,7 @@ interface ICreateData {
 
 export default class CreateUserService {
     public async execute({name, surname, email, password, confirm_password}: ICreateData ): Promise<any> {
+        const userRepository = getRepository(User);
 
         if(!name || !email || !password || !confirm_password) {
             throw new Error("All fiels are required");
@@ -21,25 +22,24 @@ export default class CreateUserService {
             throw new Error("Password does not match");
         }   
 
-        const checkEmailExists = await db('users')
-            .where('users.email', '=', email)
-            .first();
+        const checkUserExists = await userRepository.findOne({
+            where: { email}
+        });
 
-        if(checkEmailExists) {
+        if(checkUserExists) {
             throw new Error("Email already in use");
         }
 
-        const hashedPassord = await hash(password, 8)
-
-        const fullName = `${name} ${surname}`; 
-        const createUser = await db('users').insert({
-            name: fullName,
+        const user = userRepository.create({
+            name: `${name} ${surname}`,
             email,
-            password : hashedPassord
-        });
+            password:  await hash(password, 8)
+        })
 
-        if(createUser) {
-            return {status: 'ok', statusCode: "201", fullName}
+        await userRepository.save(user);
+
+        if(user) {
+            return {status: 'ok', statusCode: "201"}
         }else{
             return {status: 'error', statusCode: "400"}
         }

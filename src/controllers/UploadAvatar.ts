@@ -7,11 +7,14 @@ export default class UpdateAvatar{
         const { location } = request.file; 
 
         const { userid } = request.headers;
-        const userId = JSON.stringify(userid);
         
         const updateAvatarService = new UpdateAvatarService();
-        const avatarUpload = await updateAvatarService.execute({location, userId});
+        const avatarUpload = await updateAvatarService.execute({location, userid});
 
-        return response.json(avatarUpload);
+        if(avatarUpload) {
+            return response.json({status: 'ok', avatarUpload});
+        }else{
+            return response.json({status: 'error'})
+        }
     }
 }

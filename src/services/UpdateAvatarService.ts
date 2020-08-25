@@ -1,22 +1,28 @@
-import db from "../database/conecction";
+import db from "../database/sqlite/conecction";
+import User from "../models/User";
+import { getRepository } from "typeorm";
 
 interface UpdateProps {
-    userId: string;
+    userid: string | string[] | undefined;
     location: string; 
 }
 
 export default class UpdateAvatarService {
-    public async execute({userId, location}: UpdateProps) : Promise<any> {
-        const userid = userId.replace(/"/g, '');
+    public async execute({userid, location}: UpdateProps) : Promise<any> {
 
-        const userID = await db('users')
-        .where('id', userid)
-        .update({
-            avatar: location
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({
+            where: { id: userid}
         });
 
-        const user = await db('users').where('id', userID);
+        if(!user) {
+            throw new Error('User does not found');
+        }
 
-        return { user };
+        user.avatar = location;
+        await userRepository.save(user);
+
+        return user;
     }
 }

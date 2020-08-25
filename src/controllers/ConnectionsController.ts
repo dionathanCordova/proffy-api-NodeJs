@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import db from '../database/conecction';
+import db from '../database/sqlite/conecction';
 
 export default class ConnectionsController{
     async index(request: Request, response: Response) {

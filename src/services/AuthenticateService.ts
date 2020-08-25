@@ -1,6 +1,8 @@
-import db from "../database/conecction";
+import db from "../database/sqlite/conecction";
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { getRepository } from "typeorm";
+import User from "../models/User";
 
 interface AuthData {
     email: string;
@@ -22,10 +24,11 @@ interface IResponse {
 
 export default class AuthenticateService{
     public async execute({email, password}: AuthData): Promise<IResponse> {
+        const userRepository = getRepository(User)
 
-        const userData = await db('users')
-            .where('users.email', '=', email)
-            .first();
+        const userData = await userRepository.findOne({
+            where: {email}
+        });
 
         if(!userData) {
             throw new Error('Credentials dont match');
@@ -42,6 +45,6 @@ export default class AuthenticateService{
             expiresIn: '1d',
         });
 
-        return {userData, token: token};
+        return {userData, token};
     }
 }
