@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../database/sqlite/conecction';
 import convertHourToMinutes from '../utils/convertHourToMinutes';
+import { getRepository } from 'typeorm';
 
 interface SheduleItem {
     week_day: number;
@@ -11,6 +12,7 @@ interface SheduleItem {
 export default class ClassesController{
 
     async index(request: Request, response: Response) {
+        const classRepository = getRepository(ClassRepository);
         const {week_day, subject, time}  = request.query;
 
         if(!week_day || !subject || !time) {
@@ -19,18 +21,31 @@ export default class ClassesController{
 
         const timeInMinutes = convertHourToMinutes(time as string);
 
-        const classes = await db('classes')
-            .whereExists(function() {
-                this.select('class_schedule.*')
-                    .from('class_schedule')
-                    .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
-                    .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
-                    .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
-                    .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
-            })
-            .where('classes.subject', '=', subject as string)
-            .join('users', 'classes.user_id', '=', 'users.id')
-            .select(['classes.*', 'users.*']);
+        const classes = await classRepository.find({
+            join: {
+                alias: 'classes',
+                innerJoin: { class_schedule: 'classes.class_schedule'},
+            },
+            where: ( qb: any ) => {
+                qb.where('classes.subject ILIKE :subject', { subject })
+                .andWhere('class_schedule.week_day = :week_day', { week_day })
+                .andWhere('class_schedule.from <= :timeInMinutes', { timeInMinutes })
+                .andWhere('class_schedule.to > :timeInMinutes', { timeInMinutes })
+            },
+        })
+        
+        // const classes = await db('classes')
+        //     .whereExists(function() {
+        //         this.select('class_schedule.*')
+        //             .from('class_schedule')
+        //             .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
+        //             .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
+        //             .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
+        //             .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
+        //     })
+        //     .where('classes.subject', '=', subject as string)
+        //     .join('users', 'classes.user_id', '=', 'users.id')
+        //     .select(['classes.*', 'users.*']);
 
         return response.json(classes);
     }
