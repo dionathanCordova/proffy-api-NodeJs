@@ -8,7 +8,6 @@
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "build": "tsc",
     "start": "ts-node-dev src/server.ts"
   },
   "module": "ES2015",
