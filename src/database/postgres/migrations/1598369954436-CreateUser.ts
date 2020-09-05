@@ -31,7 +31,7 @@ export class CreateUser1598369954436 implements MigrationInterface {
                     },
                     {
                         name: 'bio',
-                        type: 'varchar',
+                        type: 'text',
                         isNullable: true,
                     },
                     {
@@ -47,7 +47,6 @@ export class CreateUser1598369954436 implements MigrationInterface {
                         type: 'varchar',
                         isNullable: true,
                     },
-
                     {
                         name: 'password_reset_expires',
                         type: 'timestamp with time zone',
