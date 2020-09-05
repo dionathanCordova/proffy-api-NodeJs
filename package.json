@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "compilerOptions" : {
+    "include" : [
+      "src/**/*.ts"
+    ],
+    "exclude" : [
+        "node_modules"
+    ]
+  },
   "scripts": {
     "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
