@@ -10,7 +10,6 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "start": "node src/server.ts"
   },
-  "type": "module",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",
