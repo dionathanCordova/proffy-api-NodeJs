@@ -145,7 +145,7 @@ Agora é a hora de se desafiar a publicar a sua aplicação na WEB para todo mun
 
 - [x] Authenticação de usuário
 - [x] Recuperação de senha
-- [ ] Página de profile
+- [x] Página de profile
 - [ ] Splash Screen no React Native com Expo
 - [ ] Paginação na listagem de proffys
 - [ ] Exibindo horários disponíveis dos proffys

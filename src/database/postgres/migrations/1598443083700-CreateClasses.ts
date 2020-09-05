@@ -24,7 +24,9 @@ export class CreateClasses1598443083700 implements MigrationInterface {
                     },
                     {
                         name: 'cost',
-                        type: 'varchar',
+                        type: 'numeric',
+                        precision: 10,
+                        scale: 2,
                     },
                     {
                         name: 'created_at',
