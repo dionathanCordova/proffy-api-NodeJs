@@ -15,7 +15,10 @@ export default class EtherealMailProvider implements IMailProvider {
         this.pass = 'fodassegmail@';
         
         this.transporter = nodemailer.createTransport({
-            service: 'gmail',
+            // service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
               user: this.from,
               pass: this.pass 
@@ -42,8 +45,10 @@ export default class EtherealMailProvider implements IMailProvider {
         },  (error, info) => {
             if (error) {
                 console.log(error);
+                return {status: 'error'}
             } else {
                 console.log('Email sent: ' + info.response);
+                return {status: 'ok'}
             }
         });
 

@@ -5,6 +5,7 @@ import path from 'path';
 import GmailProvider from '../providers/MailProvider/implementations/GmailProvider';
 import { getRepository } from "typeorm";
 import User from "../models/User";
+import { response } from "express";
 
 interface RequestData {
     email: string;
