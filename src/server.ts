@@ -1,9 +1,12 @@
 import 'reflect-metadata';
-import express, { response } from 'express';
+import dotenv from 'dotenv';
+import express from 'express';
 import routes from './routes/routes';
 import cors from 'cors';
 
 import './database';
+
+dotenv.config();
 
 const app = express();
 
