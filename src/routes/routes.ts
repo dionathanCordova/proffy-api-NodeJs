@@ -34,7 +34,7 @@ routes.post('/users/mydata', usersController.findDataById);
 routes.post('/forgot_password', forgotPassController.create);
 routes.post('/reset_password/', forgotPassController.update);
 
-routes.post('/forgot_password_teste', forgotPassTesteController.create);
+routes.post('/forgot_teste', forgotPassTesteController.create);
 
 routes.patch('/uploadImages', multer(multerConfig).single('file'), uploadAvatar.index)
 
