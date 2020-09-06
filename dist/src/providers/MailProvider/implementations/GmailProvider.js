@@ -66,8 +66,8 @@ var EtherealMailProvider = /** @class */ (function () {
                         _c = (_b = this.transporter).sendMail;
                         _d = {
                             from: {
-                                name: from.name || 'Equipe Proffy',
-                                address: from.email || 'proffy@examples.com',
+                                name: 'Equipe Teste',
+                                address: 'teste@examples.com',
                             },
                             to: {
                                 name: to.name,
