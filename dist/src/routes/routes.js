@@ -1,0 +1,32 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = __importDefault(require("express"));
+var multer_1 = __importDefault(require("multer"));
+var multerConfig = require('../config/multer');
+var routes = express_1.default();
+var ClassesController_1 = __importDefault(require("../controllers/ClassesController"));
+var ConnectionsController_1 = __importDefault(require("../controllers/ConnectionsController"));
+var AuthController_1 = __importDefault(require("../controllers/AuthController"));
+var UserControllers_1 = __importDefault(require("../controllers/UserControllers"));
+var ForgotPassController_1 = __importDefault(require("../controllers/ForgotPassController"));
+var UploadAvatar_1 = __importDefault(require("../controllers/UploadAvatar"));
+var classesController = new ClassesController_1.default();
+var connectionsController = new ConnectionsController_1.default();
+var authenticateController = new AuthController_1.default();
+var usersController = new UserControllers_1.default();
+var forgotPassController = new ForgotPassController_1.default();
+var uploadAvatar = new UploadAvatar_1.default();
+routes.post('/classes', classesController.create);
+routes.get('/classes', classesController.index);
+routes.get('/connection', connectionsController.index);
+routes.post('/connection', connectionsController.create);
+routes.post('/authenticate', authenticateController.create);
+routes.post('/users', usersController.create);
+routes.post('/users/mydata', usersController.findDataById);
+routes.post('/forgot_password', forgotPassController.create);
+routes.post('/reset_password/', forgotPassController.update);
+routes.patch('/uploadImages', multer_1.default(multerConfig).single('file'), uploadAvatar.index);
+exports.default = routes;
