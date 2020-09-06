@@ -1,5 +1,6 @@
 import { Request, Response} from 'express';
 import ForgotPasswordService from '../services/ForgotPasswordService';
+import ForgotPasswordTesteService from '../services/ForgotPasswordTesteService';
 import ResetPasswordService from '../services/ResetPasswordService';
 import path from 'path';
 
@@ -29,6 +30,22 @@ export default class ForgotPassController{
             return response.status(400).json({error: error.message})
         }
     }
+
+    
+    public async teste(request: Request, response: Response) : Promise<Response> {
+        try {
+            const { email } = request.body;
+    
+            const forgotPassService = new ForgotPasswordTesteService();
+            const forgot = await forgotPassService.execute({email});
+            
+            return response.json(forgot);
+            
+        } catch (error) {
+            return response.status(400).json({error: error.message})
+        }
+    }
+
 
     public async update(request: Request, response: Response): Promise<Response> {
         try {
