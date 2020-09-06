@@ -62,7 +62,12 @@ var ForgotPassController = /** @class */ (function () {
                         _b.trys.push([0, 2, , 3]);
                         _a = request.body, email = _a.email, password = _a.password, token = _a.token;
                         forgotPassService = new ForgotPasswordService_1.default();
-                        return [4 /*yield*/, forgotPassService.execute({ email: email })];
+                        return [4 /*yield*/, forgotPassService.execute({ email: email })
+                                .then(function (response) {
+                                console.log(response);
+                            }).catch(function (err) {
+                                console.log(err.message);
+                            })];
                     case 1:
                         forgot = _b.sent();
                         return [2 /*return*/, response.json(forgot)];
@@ -71,23 +76,6 @@ var ForgotPassController = /** @class */ (function () {
                         return [2 /*return*/, response.status(400).json({ error: error_1.message })];
                     case 3: return [2 /*return*/];
                 }
-            });
-        });
-    };
-    ForgotPassController.prototype.teste = function (request, response) {
-        return __awaiter(this, void 0, void 0, function () {
-            var email;
-            return __generator(this, function (_a) {
-                try {
-                    email = request.body.email;
-                    // const forgotPassService = new ForgotPasswordTesteService();
-                    // const forgot = await forgotPassService.execute({email});
-                    return [2 /*return*/, response.json(email)];
-                }
-                catch (error) {
-                    return [2 /*return*/, response.status(400).json({ error: error.message })];
-                }
-                return [2 /*return*/];
             });
         });
     };

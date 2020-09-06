@@ -52,7 +52,12 @@ var ForgotPassTesteController = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         email = request.body.email;
                         forgotPassService = new ForgotPasswordTesteService_1.default();
-                        return [4 /*yield*/, forgotPassService.execute({ email: email })];
+                        return [4 /*yield*/, forgotPassService.execute({ email: email })
+                                .then(function (response) {
+                                console.log(response);
+                            }).catch(function (err) {
+                                console.log(err.message);
+                            })];
                     case 1:
                         forgot = _a.sent();
                         return [2 /*return*/, response.json(forgot)];
