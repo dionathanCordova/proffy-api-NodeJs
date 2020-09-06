@@ -38,30 +38,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+var ForgotPasswordTesteService_1 = __importDefault(require("../services/ForgotPasswordTesteService"));
 var ResetPasswordService_1 = __importDefault(require("../services/ResetPasswordService"));
 var ForgotPassTesteController = /** @class */ (function () {
     function ForgotPassTesteController() {
     }
     ForgotPassTesteController.prototype.create = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var email;
+            var email, forgotPassService, forgot, error_1;
             return __generator(this, function (_a) {
-                try {
-                    email = request.body.email;
-                    // const forgotPassService = new ForgotPasswordTesteService();
-                    // const forgot = await forgotPassService.execute({email});
-                    return [2 /*return*/, response.json(email)];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        email = request.body.email;
+                        forgotPassService = new ForgotPasswordTesteService_1.default();
+                        return [4 /*yield*/, forgotPassService.execute({ email: email })];
+                    case 1:
+                        forgot = _a.sent();
+                        return [2 /*return*/, response.json(forgot)];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, response.status(400).json({ error: error_1.message })];
+                    case 3: return [2 /*return*/];
                 }
-                catch (error) {
-                    return [2 /*return*/, response.status(400).json({ error: error.message })];
-                }
-                return [2 /*return*/];
             });
         });
     };
     ForgotPassTesteController.prototype.update = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, token, password, resetpasswordService, resetData, error_1;
+            var _a, token, password, resetpasswordService, resetData, error_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -73,7 +78,7 @@ var ForgotPassTesteController = /** @class */ (function () {
                         resetData = _b.sent();
                         return [2 /*return*/, response.status(201).json({ status: 'ok', token: token, password: password })];
                     case 2:
-                        error_1 = _b.sent();
+                        error_2 = _b.sent();
                         return [2 /*return*/, response.status(400).json({ status: 'error', error: 'Some error ocurred, make a new request to reset the password' })];
                     case 3: return [2 /*return*/];
                 }

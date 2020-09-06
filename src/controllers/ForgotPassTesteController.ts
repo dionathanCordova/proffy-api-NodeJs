@@ -14,12 +14,11 @@ export default class ForgotPassTesteController{
     public async create(request: Request, response: Response) : Promise<Response> {
         try {
             const { email } = request.body;
-            
 
-            // const forgotPassService = new ForgotPasswordTesteService();
-            // const forgot = await forgotPassService.execute({email});
+            const forgotPassService = new ForgotPasswordTesteService();
+            const forgot = await forgotPassService.execute({email});
             
-            return response.json(email);
+            return response.json(forgot);
             
         } catch (error) {
             return response.status(400).json({error: error.message})
