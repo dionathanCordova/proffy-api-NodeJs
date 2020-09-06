@@ -10,7 +10,7 @@ interface RequestData {
     email: string;
 }
  
-export default class ForgotPassControllerService{
+export default class ForgotPassTesteService{
     
     public async execute({email}: RequestData) : Promise<any> {
 
