@@ -16,7 +16,12 @@ export default class ForgotPassTesteController{
             const { email } = request.body;
 
             const forgotPassService = new ForgotPasswordTesteService();
-            const forgot = await forgotPassService.execute({email});
+            const forgot = await forgotPassService.execute({email})
+            .then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err.message)
+            });
             
             return response.json(forgot);
             

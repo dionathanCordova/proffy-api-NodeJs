@@ -22,7 +22,12 @@ export default class ForgotPassController{
             const { email, password, token } = request.body;
     
             const forgotPassService = new ForgotPasswordService();
-            const forgot = await forgotPassService.execute({email});
+            const forgot = await forgotPassService.execute({email})
+            .then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err.message)
+            });
             
             return response.json(forgot);
             
@@ -30,23 +35,6 @@ export default class ForgotPassController{
             return response.status(400).json({error: error.message})
         }
     }
-
-    
-    public async teste(request: Request, response: Response) : Promise<Response> {
-        try {
-            const { email } = request.body;
-            
-
-            // const forgotPassService = new ForgotPasswordTesteService();
-            // const forgot = await forgotPassService.execute({email});
-            
-            return response.json(email);
-            
-        } catch (error) {
-            return response.status(400).json({error: error.message})
-        }
-    }
-
 
     public async update(request: Request, response: Response): Promise<Response> {
         try {

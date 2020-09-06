@@ -30,7 +30,7 @@ export default class EtherealMailProvider implements IMailProvider {
           
         const template = new HandleBarsTemplate();
         
-        const message =  this.transporter.sendMail({
+        const message = this.transporter.sendMail({
             from: {
                 name: from?.name || 'Equipe Proffy',
                 address: from?.email || 'proffy@examples.com',
