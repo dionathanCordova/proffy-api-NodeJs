@@ -8,10 +8,8 @@
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "start": "node ./build/src/server.js"
+    "start": "node ./dist/src/server.js"
   },
-  "module": "ES2015",
-  "type": "module",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",
