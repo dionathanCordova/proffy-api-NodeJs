@@ -45,24 +45,24 @@ var ForgotPassTesteController = /** @class */ (function () {
     }
     ForgotPassTesteController.prototype.create = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var email, forgotPassService, forgot, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, email, userId, forgotPassService, forgot, error_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        email = request.body.email;
+                        _b.trys.push([0, 2, , 3]);
+                        _a = request.body, email = _a.email, userId = _a.userId;
                         forgotPassService = new ForgotPasswordTesteService_1.default();
-                        return [4 /*yield*/, forgotPassService.execute({ email: email })
+                        return [4 /*yield*/, forgotPassService.execute({ email: email, userId: userId })
                                 .then(function (response) {
                                 console.log(response);
                             }).catch(function (err) {
                                 console.log(err.message);
                             })];
                     case 1:
-                        forgot = _a.sent();
+                        forgot = _b.sent();
                         return [2 /*return*/, response.json(forgot)];
                     case 2:
-                        error_1 = _a.sent();
+                        error_1 = _b.sent();
                         return [2 /*return*/, response.status(400).json({ error: error_1.message })];
                     case 3: return [2 /*return*/];
                 }

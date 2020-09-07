@@ -13,10 +13,10 @@ export default class ForgotPassTesteController{
 
     public async create(request: Request, response: Response) : Promise<Response> {
         try {
-            const { email } = request.body;
+            const { email, userId } = request.body;
 
             const forgotPassService = new ForgotPasswordTesteService();
-            const forgot = await forgotPassService.execute({email})
+            const forgot = await forgotPassService.execute({email, userId})
             .then(response => {
                 console.log(response)
             }).catch(err => {

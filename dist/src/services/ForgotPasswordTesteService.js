@@ -44,7 +44,7 @@ var ForgotPassTesteService = /** @class */ (function () {
     function ForgotPassTesteService() {
     }
     ForgotPassTesteService.prototype.execute = function (_a) {
-        var email = _a.email;
+        var email = _a.email, userId = _a.userId;
         return __awaiter(this, void 0, void 0, function () {
             var forgotPasswordTemplate, user, emailData, sendmail, respEmail;
             return __generator(this, function (_b) {
@@ -60,7 +60,7 @@ var ForgotPassTesteService = /** @class */ (function () {
                         file: forgotPasswordTemplate,
                         variables: {
                             name: user,
-                            link: "http://localhost:3000/reset-password/" + email
+                            link: "http://localhost:3000/reset-password/" + userId
                         }
                     }
                 };

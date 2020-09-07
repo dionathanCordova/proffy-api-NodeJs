@@ -45,10 +45,10 @@ var EtherealMailProvider = /** @class */ (function () {
         this.from = 'defaltern@gmail.com';
         this.pass = 'fodassegmail@';
         this.transporter = nodemailer_1.default.createTransport({
-            service: 'gmail',
-            // host: 'smtp.gmail.com',
-            // port: 465,
-            // secure: true,
+            // service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: this.from,
                 pass: this.pass
@@ -66,8 +66,8 @@ var EtherealMailProvider = /** @class */ (function () {
                         _c = (_b = this.transporter).sendMail;
                         _d = {
                             from: {
-                                name: 'Equipe Teste',
-                                address: 'teste@examples.com',
+                                name: 'Equipe Teste Front-end',
+                                address: 'testefrontend@examples.com',
                             },
                             to: {
                                 name: to.name,

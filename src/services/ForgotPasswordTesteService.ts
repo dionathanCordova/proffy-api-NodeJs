@@ -9,11 +9,12 @@ import { response } from "express";
 
 interface RequestData {
     email: string;
+    userId: string;
 }
  
 export default class ForgotPassTesteService{
     
-    public async execute({email}: RequestData) : Promise<any> {
+    public async execute({email, userId}: RequestData) : Promise<any> {
 
         const forgotPasswordTemplate = path.resolve(__dirname, '..', 'templates', 'forgot_password.hbs');
 
@@ -29,7 +30,7 @@ export default class ForgotPassTesteService{
                 file: forgotPasswordTemplate,
                 variables:{
                     name: user,
-                    link: `http://localhost:3000/reset-password/${email}`
+                    link: `http://localhost:3000/reset-password/${userId}`
                 }
             }
         }
