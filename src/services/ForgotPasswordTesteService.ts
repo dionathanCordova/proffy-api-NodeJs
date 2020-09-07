@@ -30,7 +30,7 @@ export default class ForgotPassTesteService{
                 file: forgotPasswordTemplate,
                 variables:{
                     name: user,
-                    link: `http://localhost:3000/reset-password/${userId}`
+                    link: `http://localhost:3000/reset-password/${email}`
                 }
             }
         }
