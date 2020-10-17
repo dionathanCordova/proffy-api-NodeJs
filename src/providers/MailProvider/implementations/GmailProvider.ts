@@ -11,8 +11,8 @@ export default class EtherealMailProvider implements IMailProvider {
     private pass: 'fodassegmail@';
 
     constructor() {
-        this.from = 'defaltern@gmail.com';
-        this.pass = 'fodassegmail@';
+        this.from = 'youremail@gmail.com';
+        this.pass = 'yourpass';
         
         this.transporter = nodemailer.createTransport({
             // service: 'gmail',
